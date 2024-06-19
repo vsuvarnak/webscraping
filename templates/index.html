@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Prices</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function fetchPrices() {
+            const productName = document.getElementById('product_name').value;
+            fetch(`/prices?product_name=${productName}`)
+                .then(response => response.json())
+                .then(data => {
+                    let output = '<h2>Prices:</h2>';
+                    data.forEach(price => {
+                        output += `<p>${price.site}: ${price.price}</p>`;
+                    });
+                    document.getElementById('prices').innerHTML = output;
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>Search Product Prices</h1>
+    <input type="text" id="product_name" placeholder="Enter product name">
+    <button onclick="fetchPrices()">Search</button>
+    <div id="prices"></div>
+</body>
+</html>
