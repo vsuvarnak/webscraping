@@ -11,6 +11,28 @@ input, button {
     padding: 10px;
 }
 
-#prices {
-    margin-top: 20px;
+.product {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 400px; /* Adjust width as needed */
+}
+
+.product h3 {
+    color: #333;
+}
+
+.product p {
+    margin: 5px 0;
+}
+
+.product img {
+    max-width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.product a {
+    text-decoration: none;
+    color: #007bff;
 }

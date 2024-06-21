@@ -1,25 +1,32 @@
-from flask import Flask, jsonify, request, render_template
+from flask import jsonify, request, render_template
 from app import app
-from app.models import Price, session
-from app.scraper import scrape_ebay, scrape_amazon,scrape_flipkart
+from app.scraper import  scrape_flipkart ,scrape_ebay, scrape_amazon
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/prices',methods= ['GET'])
+
+@app.route('/prices', methods=['GET'])
 def get_prices():
     product_name = request.args.get('product_name')
-    amazon_prices =scrape_amazon(product_name)
-    ebay_prices= scrape_ebay(product_name)
-    flipkart_prices= scrape_flipkart(product_name)
+    amazon_products = scrape_amazon(product_name)
+    ebay_products = scrape_ebay(product_name)
+    flipkart_products = scrape_flipkart(product_name)
 
-    prices = []
-    for price in amazon_prices:
-        prices.append({'site': 'Amazon', 'price': price})
-    for price in ebay_prices:
-        prices.append({'site': 'eBay', 'price': price})
-    for price in flipkart_prices:
-        prices.append({'site': 'Flipkart', 'price': price})
+    products = []
 
-    return jsonify(prices)
+    for product in amazon_products:
+        product['site'] = 'Amazon'
+        products.append(product)
+
+    for product in ebay_products:
+        product['site'] = 'eBay'
+        products.append(product)
+
+    for product in flipkart_products:
+        product['site'] = 'Flipkart'
+        products.append(product)
+
+    return jsonify(products)

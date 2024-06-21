@@ -9,11 +9,21 @@
             fetch(`/prices?product_name=${productName}`)
                 .then(response => response.json())
                 .then(data => {
-                    let output = '<h2>Prices:</h2>';
-                    data.forEach(price => {
-                        output += `<p>${price.site}: ${price.price}</p>`;
+                    let output = '<h2>Products:</h2>';
+                    data.forEach(product => {
+                        output += `
+                            <div class="product">
+                                <h3>${product.site}: ${product.price}</h3>
+                                <p>Title: ${product.title}</p>
+                                <img src="${product.image}" alt="Product Image" class="product-image">
+                                <p><a href="${product.url}" target="_blank">View Product</a></p>
+                            </div>
+                        `;
                     });
-                    document.getElementById('prices').innerHTML = output;
+                    document.getElementById('products').innerHTML = output;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
                 });
         }
     </script>
@@ -22,6 +32,6 @@
     <h1>Search Product Prices</h1>
     <input type="text" id="product_name" placeholder="Enter product name">
     <button onclick="fetchPrices()">Search</button>
-    <div id="prices"></div>
+    <div id="products"></div>
 </body>
 </html>
